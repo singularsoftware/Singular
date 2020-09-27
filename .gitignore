@@ -1,0 +1,27 @@
+#Ignore List 
+*.d
+*.pre
+*.p1
+*.lst
+*.sym
+*.obj
+*.o
+*.sdb
+*.obj.dmp
+html/
+*/nbproject/private/
+nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+funclist
+nbproject/Makefile-*
+disassembly/
+*.map
+/B1/bootloader.X/nbproject/private
+/B1/bootloaderTestApp.X/nbproject/private
+/B1/BootloaderApp/bin/Debug
+/B1/BootloaderApp/obj/Debug
