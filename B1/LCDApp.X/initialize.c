@@ -81,15 +81,13 @@
 #pragma config TSEQ =       0xffff
 #pragma config CSEQ =       0x0
 
-extern void BootloaderRunApplication( void );
-
 void Initialize ( void )
 {
     uint32_t directionControl;
     uint32_t digitalMode;
     uint32_t pullUp;
     uint32_t pullDown;
-    volatile uint32_t* ppsRegs[2];
+    volatile uint32_t* ppsRegs[3];
     uint32_t ppsValues[sizeof(ppsRegs)/sizeof(uint32_t)];
     
      /* PMD (Peripheral Module Disable) Configuration */
@@ -97,53 +95,85 @@ void Initialize ( void )
     uint32_t pmd2 = 0x3; /* disbale - Comparator 1 + Comparator 2 */
     uint32_t pmd3 = 0x1ff01ff; /* disbale - Input Capture 1 to Input Capture 9 + Output Compare 1 to Output Compare 9 */
     uint32_t pmd4 = 0x1ff; /* disbale - Timer1 to Timer9 */
-    uint32_t pmd5 = 0x301f3f3d;/* disbale - UART1, UART3 to UART6 +SPI1 to SPI6 +I2C1 to I2C5 + CAN1 to CAN2 */
+    uint32_t pmd5 = 0x301f1f3d;/* disbale - UART1, UART3 to UART6 +SPI1 to SPI5 +I2C1 to I2C5 + CAN1 to CAN2 */
     uint32_t pmd6 = 0x10830001; /* disbale - RTCC PMP EBI SQI1 Ethernet */
     uint32_t pmd7 = 0x500000;  /* disbale - Random Number Generator Crypto */
-    /* Left enabled - UART2 + USB + Reference Clock Output 1 to Reference Clock Output 4  + DMA */
+    /* Left enabled - UART2 + USB + Reference Clock Output 1 to Reference Clock Output 4  + DMA + SPI6*/
     
     __builtin_disable_interrupts();
     
     /* PMD */
     CLOCKInitialize(pmd1,pmd2,pmd3,pmd4,pmd5,pmd6,pmd7);
     
-    PRECONbits.PREFEN = 3; /* Enable predictive prefetch for any address */
-    PRECONbits.PFMWS  = 2; /* Two Wait states */
+    PRECONbits.PREFEN = 3;/* Enable predictive prefetch for any address */
+    PRECONbits.PFMWS = 2; /* Two Wait states */
     CFGCONbits.ECCCON = 3; /* ECC (Flash Error Correcting Code) and dynamic ECC are disabled */
 
     directionControl = 0x0;
     pullUp = 0x0;
     pullDown = 0x0;
+    
     /* PORT B */
-    digitalMode = 0x0004000;//B14
+    directionControl = 0x400;/* Output->LCD Chip Select pin B10 */
+    digitalMode = 0x4000; /* UxRX RB14 */
     GPIOPortInitialize(PORT_B, directionControl, digitalMode, pullUp, pullDown);
+
+    /* PORT C */
+    directionControl = 0x8;/* Output->LCD Data Command pin C3 */
+    digitalMode = 0x0;
+    GPIOPortInitialize(PORT_C, directionControl, digitalMode, pullUp, pullDown);
+    
+    /* PORT E */
+    directionControl = 0x30;/* Outputs->LCD Reset pin E5, LCD Back Light Control pin E4 */
+    digitalMode = 0x30;
+    GPIOPortInitialize(PORT_E, directionControl, digitalMode, pullUp, pullDown);
+    
     /* PORT G */
-    digitalMode = 0x00000040;//G6
+    directionControl = 0x0;
+    digitalMode = 0x40;/* UxTX RG6 */
     GPIOPortInitialize(PORT_G, directionControl, digitalMode, pullUp, pullDown);
-    /* PORT H */
-    digitalMode = 0x0000008;//H3 SW
-    pullUp = 0x08;
-    GPIOPortInitialize(PORT_H, directionControl, digitalMode, pullUp, pullDown);
     
     /* PPS */  
     /* pin used for UART2 RX */
     ppsRegs[0] = &U2RXR;
     ppsValues[0] = RPG6;
+    
     /* pin used for UART2 TX */
     ppsRegs[1] = &RPB14R;
     ppsValues[1] = 2;
     
+    /* pin used for SDO6 */
+    ppsRegs[2] = &RPB15R;
+    ppsValues[2] = 10;
+
+    /* pin used for SDI6 */
+    //ppsRegs[0] = &SDI6R;
+    //ppsValues[0] = RPG6;
+
+    /* pin used for SS6 */
+    //ppsRegs[0] = &SS6R;
+    //ppsValues[0] = RPE8;
+
+    
     GPIOPPSInitialize(ppsRegs, ppsValues, sizeof(ppsRegs)/sizeof(uint32_t));
     
-    /* Start Firmware*/
-    BootloaderRunApplication();//if no trigger will not return
+    SPIInitialize(SPI6);
+    
+    SPI_TRANSFER_SETUP spiSetup;
+    spiSetup.clockFrequency = 9000000;
+    spiSetup.clockPhase = SPI_CLOCK_PHASE_LEADING_EDGE;
+    spiSetup.clockPolarity = SPI_CLOCK_POLARITY_IDLE_LOW;
+    spiSetup.dataBits = SPI_DATA_BITS_8;
+            
+    SPITransferSetup(SPI6, &spiSetup, 0 ) ;
+
 
     /* Coprocessor 0 */
     CP0Initialize(0,true);
     /* UARTs */
 	UARTInitialize(UART2);
-    /* Flash */
-    FlashProgrammingInitialize();
     /* Interrupt controller */
     IRQInitialize();
+    
+    __builtin_enable_interrupts();
 }

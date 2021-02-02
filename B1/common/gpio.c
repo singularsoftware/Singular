@@ -25,11 +25,16 @@
 #include "gpio.h"
 #include "system.h"
 
-void GPIOPortInitialize ( GPIO_PORT port, uint32_t digitalMode, uint32_t pullUp, uint32_t pullDown)
+void GPIOPortInitialize ( GPIO_PORT port, uint32_t directionControl, uint32_t digitalMode, uint32_t pullUp, uint32_t pullDown)
 {
+    *(volatile uint32_t *)(&LATA  + (port * 0x40)) = 0x0;   
+
+    *(volatile uint32_t *)(&TRISACLR  + (port * 0x40)) = directionControl;   
+            
     *(volatile uint32_t *)(&ANSELACLR + (port * 0x40)) = digitalMode;   
-    
+   
     *(volatile uint32_t *)(&CNPUASET + (port * 0x40)) = pullUp;
+    
     *(volatile uint32_t *)(&CNPDASET + (port * 0x40)) = pullDown;
 }
 

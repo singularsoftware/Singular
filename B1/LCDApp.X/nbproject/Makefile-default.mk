@@ -30,12 +30,12 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 IMAGE_TYPE=debug
 OUTPUT_SUFFIX=elf
 DEBUGGABLE_SUFFIX=elf
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/bootloaderTestApp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/LCDApp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 else
 IMAGE_TYPE=production
 OUTPUT_SUFFIX=hex
 DEBUGGABLE_SUFFIX=elf
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/bootloaderTestApp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/LCDApp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 endif
 
 ifeq ($(COMPARE_BUILD), true)
@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=../common/clock.c ../common/gpio.c ../common/irq.c ../common/uart.c ../common/system.c ../common/cp0.c main.c initialize.c
+SOURCEFILES_QUOTED_IF_SPACED=../common/clock.c ../common/gpio.c ../common/irq.c ../common/uart.c ../common/system.c ../common/cp0.c ../common/spi.c ../ST7735SChipDriver/lcd.c main.c initialize.c ../ST7735SChipDriver/lcdfonts.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1270477542/clock.o ${OBJECTDIR}/_ext/1270477542/gpio.o ${OBJECTDIR}/_ext/1270477542/irq.o ${OBJECTDIR}/_ext/1270477542/uart.o ${OBJECTDIR}/_ext/1270477542/system.o ${OBJECTDIR}/_ext/1270477542/cp0.o ${OBJECTDIR}/main.o ${OBJECTDIR}/initialize.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1270477542/clock.o.d ${OBJECTDIR}/_ext/1270477542/gpio.o.d ${OBJECTDIR}/_ext/1270477542/irq.o.d ${OBJECTDIR}/_ext/1270477542/uart.o.d ${OBJECTDIR}/_ext/1270477542/system.o.d ${OBJECTDIR}/_ext/1270477542/cp0.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/initialize.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1270477542/clock.o ${OBJECTDIR}/_ext/1270477542/gpio.o ${OBJECTDIR}/_ext/1270477542/irq.o ${OBJECTDIR}/_ext/1270477542/uart.o ${OBJECTDIR}/_ext/1270477542/system.o ${OBJECTDIR}/_ext/1270477542/cp0.o ${OBJECTDIR}/_ext/1270477542/spi.o ${OBJECTDIR}/_ext/1910017717/lcd.o ${OBJECTDIR}/main.o ${OBJECTDIR}/initialize.o ${OBJECTDIR}/_ext/1910017717/lcdfonts.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1270477542/clock.o.d ${OBJECTDIR}/_ext/1270477542/gpio.o.d ${OBJECTDIR}/_ext/1270477542/irq.o.d ${OBJECTDIR}/_ext/1270477542/uart.o.d ${OBJECTDIR}/_ext/1270477542/system.o.d ${OBJECTDIR}/_ext/1270477542/cp0.o.d ${OBJECTDIR}/_ext/1270477542/spi.o.d ${OBJECTDIR}/_ext/1910017717/lcd.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/initialize.o.d ${OBJECTDIR}/_ext/1910017717/lcdfonts.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/_ext/1270477542/clock.o ${OBJECTDIR}/_ext/1270477542/gpio.o ${OBJECTDIR}/_ext/1270477542/irq.o ${OBJECTDIR}/_ext/1270477542/uart.o ${OBJECTDIR}/_ext/1270477542/system.o ${OBJECTDIR}/_ext/1270477542/cp0.o ${OBJECTDIR}/main.o ${OBJECTDIR}/initialize.o
+OBJECTFILES=${OBJECTDIR}/_ext/1270477542/clock.o ${OBJECTDIR}/_ext/1270477542/gpio.o ${OBJECTDIR}/_ext/1270477542/irq.o ${OBJECTDIR}/_ext/1270477542/uart.o ${OBJECTDIR}/_ext/1270477542/system.o ${OBJECTDIR}/_ext/1270477542/cp0.o ${OBJECTDIR}/_ext/1270477542/spi.o ${OBJECTDIR}/_ext/1910017717/lcd.o ${OBJECTDIR}/main.o ${OBJECTDIR}/initialize.o ${OBJECTDIR}/_ext/1910017717/lcdfonts.o
 
 # Source Files
-SOURCEFILES=../common/clock.c ../common/gpio.c ../common/irq.c ../common/uart.c ../common/system.c ../common/cp0.c main.c initialize.c
+SOURCEFILES=../common/clock.c ../common/gpio.c ../common/irq.c ../common/uart.c ../common/system.c ../common/cp0.c ../common/spi.c ../ST7735SChipDriver/lcd.c main.c initialize.c ../ST7735SChipDriver/lcdfonts.c
 
 
 
@@ -88,7 +88,7 @@ FIXDEPS=fixDeps
 ifneq ($(INFORMATION_MESSAGE), )
 	@echo $(INFORMATION_MESSAGE)
 endif
-	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/bootloaderTestApp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/LCDApp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
 MP_PROCESSOR_OPTION=32MZ2048EFH144
 MP_LINKER_FILE_OPTION=
@@ -143,6 +143,18 @@ ${OBJECTDIR}/_ext/1270477542/cp0.o: ../common/cp0.c  nbproject/Makefile-${CND_CO
 	@${RM} ${OBJECTDIR}/_ext/1270477542/cp0.o 
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1270477542/cp0.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -ffunction-sections -Werror -MMD -MF "${OBJECTDIR}/_ext/1270477542/cp0.o.d" -o ${OBJECTDIR}/_ext/1270477542/cp0.o ../common/cp0.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp=${DFP_DIR}  
 	
+${OBJECTDIR}/_ext/1270477542/spi.o: ../common/spi.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1270477542" 
+	@${RM} ${OBJECTDIR}/_ext/1270477542/spi.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1270477542/spi.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1270477542/spi.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -ffunction-sections -Werror -MMD -MF "${OBJECTDIR}/_ext/1270477542/spi.o.d" -o ${OBJECTDIR}/_ext/1270477542/spi.o ../common/spi.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp=${DFP_DIR}  
+	
+${OBJECTDIR}/_ext/1910017717/lcd.o: ../ST7735SChipDriver/lcd.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1910017717" 
+	@${RM} ${OBJECTDIR}/_ext/1910017717/lcd.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1910017717/lcd.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1910017717/lcd.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -ffunction-sections -Werror -MMD -MF "${OBJECTDIR}/_ext/1910017717/lcd.o.d" -o ${OBJECTDIR}/_ext/1910017717/lcd.o ../ST7735SChipDriver/lcd.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp=${DFP_DIR}  
+	
 ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/main.o.d 
@@ -154,6 +166,12 @@ ${OBJECTDIR}/initialize.o: initialize.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/initialize.o.d 
 	@${RM} ${OBJECTDIR}/initialize.o 
 	@${FIXDEPS} "${OBJECTDIR}/initialize.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -ffunction-sections -Werror -MMD -MF "${OBJECTDIR}/initialize.o.d" -o ${OBJECTDIR}/initialize.o initialize.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp=${DFP_DIR}  
+	
+${OBJECTDIR}/_ext/1910017717/lcdfonts.o: ../ST7735SChipDriver/lcdfonts.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1910017717" 
+	@${RM} ${OBJECTDIR}/_ext/1910017717/lcdfonts.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1910017717/lcdfonts.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1910017717/lcdfonts.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD4=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -ffunction-sections -Werror -MMD -MF "${OBJECTDIR}/_ext/1910017717/lcdfonts.o.d" -o ${OBJECTDIR}/_ext/1910017717/lcdfonts.o ../ST7735SChipDriver/lcdfonts.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp=${DFP_DIR}  
 	
 else
 ${OBJECTDIR}/_ext/1270477542/clock.o: ../common/clock.c  nbproject/Makefile-${CND_CONF}.mk
@@ -192,6 +210,18 @@ ${OBJECTDIR}/_ext/1270477542/cp0.o: ../common/cp0.c  nbproject/Makefile-${CND_CO
 	@${RM} ${OBJECTDIR}/_ext/1270477542/cp0.o 
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1270477542/cp0.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -ffunction-sections -Werror -MMD -MF "${OBJECTDIR}/_ext/1270477542/cp0.o.d" -o ${OBJECTDIR}/_ext/1270477542/cp0.o ../common/cp0.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp=${DFP_DIR}  
 	
+${OBJECTDIR}/_ext/1270477542/spi.o: ../common/spi.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1270477542" 
+	@${RM} ${OBJECTDIR}/_ext/1270477542/spi.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1270477542/spi.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1270477542/spi.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -ffunction-sections -Werror -MMD -MF "${OBJECTDIR}/_ext/1270477542/spi.o.d" -o ${OBJECTDIR}/_ext/1270477542/spi.o ../common/spi.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp=${DFP_DIR}  
+	
+${OBJECTDIR}/_ext/1910017717/lcd.o: ../ST7735SChipDriver/lcd.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1910017717" 
+	@${RM} ${OBJECTDIR}/_ext/1910017717/lcd.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1910017717/lcd.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1910017717/lcd.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -ffunction-sections -Werror -MMD -MF "${OBJECTDIR}/_ext/1910017717/lcd.o.d" -o ${OBJECTDIR}/_ext/1910017717/lcd.o ../ST7735SChipDriver/lcd.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp=${DFP_DIR}  
+	
 ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/main.o.d 
@@ -204,6 +234,12 @@ ${OBJECTDIR}/initialize.o: initialize.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/initialize.o 
 	@${FIXDEPS} "${OBJECTDIR}/initialize.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -ffunction-sections -Werror -MMD -MF "${OBJECTDIR}/initialize.o.d" -o ${OBJECTDIR}/initialize.o initialize.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp=${DFP_DIR}  
 	
+${OBJECTDIR}/_ext/1910017717/lcdfonts.o: ../ST7735SChipDriver/lcdfonts.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1910017717" 
+	@${RM} ${OBJECTDIR}/_ext/1910017717/lcdfonts.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1910017717/lcdfonts.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1910017717/lcdfonts.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -ffunction-sections -Werror -MMD -MF "${OBJECTDIR}/_ext/1910017717/lcdfonts.o.d" -o ${OBJECTDIR}/_ext/1910017717/lcdfonts.o ../ST7735SChipDriver/lcdfonts.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp=${DFP_DIR}  
+	
 endif
 
 # ------------------------------------------------------------------------------------
@@ -215,15 +251,15 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: link
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/bootloaderTestApp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
+dist/${CND_CONF}/${IMAGE_TYPE}/LCDApp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE) -g -mdebugger -D__MPLAB_DEBUGGER_ICD4=1 -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/bootloaderTestApp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}          -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)   -mreserve=data@0x0:0x37F   -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,-D=__DEBUG_D,--defsym=__MPLAB_DEBUGGER_ICD4=1,--defsym=_min_heap_size=64960,--gc-sections,--no-code-in-dinit,--no-dinit-in-serial-mem,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml -mdfp=${DFP_DIR}
+	${MP_CC} $(MP_EXTRA_LD_PRE) -g -mdebugger -D__MPLAB_DEBUGGER_ICD4=1 -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/LCDApp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}          -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)   -mreserve=data@0x0:0x37F   -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,-D=__DEBUG_D,--defsym=__MPLAB_DEBUGGER_ICD4=1,--defsym=_min_heap_size=64960,--gc-sections,--no-code-in-dinit,--no-dinit-in-serial-mem,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml -mdfp=${DFP_DIR}
 	
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/bootloaderTestApp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
+dist/${CND_CONF}/${IMAGE_TYPE}/LCDApp.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/bootloaderTestApp.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}          -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=_min_heap_size=64960,--gc-sections,--no-code-in-dinit,--no-dinit-in-serial-mem,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml -mdfp=${DFP_DIR}
-	${MP_CC_DIR}\\xc32-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/bootloaderTestApp.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} 
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/LCDApp.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}          -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=_min_heap_size=64960,--gc-sections,--no-code-in-dinit,--no-dinit-in-serial-mem,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml -mdfp=${DFP_DIR}
+	${MP_CC_DIR}\\xc32-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/LCDApp.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} 
 endif
 
 

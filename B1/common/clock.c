@@ -30,7 +30,11 @@ void CLOCKInitialize( uint32_t  pmd1, uint32_t  pmd2, uint32_t  pmd3,
                       uint32_t  pmd4, uint32_t  pmd5, uint32_t  pmd6, uint32_t  pmd7 )
 {
     SYSTEMUnlock();
-
+    
+    /* Set up Reference Clock 2 */
+    /* Enable oscillator (ON bit) */
+    REFO2CONSET = 0x00008000;
+    
     /* PMD (Peripheral Module Disable) Configuration */
     PMD1 = pmd1; 
     PMD2 = pmd2; 

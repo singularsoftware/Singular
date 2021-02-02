@@ -1,9 +1,9 @@
 /****************************************************************************
-  System Source File
+  Initialize Source File
   Company : Singular Software
-  File Name : system.h
-  Summary : system PIC32MZ functions.
-  Description :  PIC32MZ system functions.
+  File Name : initialize.h
+  Summary : configure and control functions.
+  Description :  main initialization of PIC32MZ.
 ****************************************************************************/
 
 /*******************************************************************************
@@ -20,28 +20,29 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-#ifndef _SYSTEM_H 
-#define _SYSTEM_H
+#ifndef INITIALIZE_H   
+#define INITIALIZE_H
+
+#include "../common/clock.h"
+#include "../common/gpio.h"
+#include "../common/cp0.h"
+#include "../common/uart.h"
+#include "../common/irq.h"
+#include "../common/spi.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
- #include "sys/kmem.h"
-    
-#define SYSTEM_FREQUENCY    100000000
-    
-#define SYSTEM_BOOTLOADER_TRIGGER_CODE (0x5048434DUL)
-#define SYSTEM_RAM_START   KVA0_TO_KVA1(0x80000000)
 
-void SYSTEMUnlock( void );
-void SYSTEMLock( void );
-void SYSTEMControlRegisterUnlock( void );
-void SYSTEMControlRegisterLock( void );
+void Initialize ( void );
 
-void SystemReset(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _SYSTEM_H */
+#endif /* INITIALIZE_H */
+
+/* *****************************************************************************
+ End of File
+ */

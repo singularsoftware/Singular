@@ -1,9 +1,9 @@
 /****************************************************************************
-  System Source File
+  Clock LCD Driver Source File
   Company : Singular Software
-  File Name : system.h
-  Summary : system PIC32MZ functions.
-  Description :  PIC32MZ system functions.
+  File Name : fonts.h
+  Summary : LCD fonts.
+  Description :  initialize LCD fonts.
 ****************************************************************************/
 
 /*******************************************************************************
@@ -20,28 +20,30 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-#ifndef _SYSTEM_H 
-#define _SYSTEM_H
+#ifndef _FONTS_H
+#define _FONTS_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
- #include "sys/kmem.h"
-    
-#define SYSTEM_FREQUENCY    100000000
-    
-#define SYSTEM_BOOTLOADER_TRIGGER_CODE (0x5048434DUL)
-#define SYSTEM_RAM_START   KVA0_TO_KVA1(0x80000000)
 
-void SYSTEMUnlock( void );
-void SYSTEMLock( void );
-void SYSTEMControlRegisterUnlock( void );
-void SYSTEMControlRegisterLock( void );
+#include <stdint.h>
 
-void SystemReset(void);
+typedef struct 
+{    
+    const uint16_t bytesWidth;
+    const uint16_t bytesHeight;
+    const uint16_t pixelWidth;
+    const uint16_t pixelHeight;
+    const uint8_t *characters;
+}LCDFont;
+
+extern LCDFont LCDFont8x10;
+
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _SYSTEM_H */
+#endif /* _FONTS_H */
+

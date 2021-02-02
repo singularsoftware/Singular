@@ -108,7 +108,7 @@ typedef enum
 //Reserved    0b1110
 //Reserved    0b1111
         
-void GPIOInitialize( void );
+void GPIOPortInitialize ( GPIO_PORT port, uint32_t directionControl, uint32_t digitalMode, uint32_t pullUp, uint32_t pullDown);
 void GPIOPPSInitialize ( volatile uint32_t ** ppsRegs, uint32_t* ppsValues, uint32_t size );
 void GPIOInputEnablePort( GPIO_PORT port, uint32_t mask );
 void GPIOOutputEnablePort( GPIO_PORT port, uint32_t mask );

@@ -83,12 +83,12 @@
 
 void Initialize ( void )
 {
+    uint32_t directionControl;
     uint32_t digitalMode;
     uint32_t pullUp;
     uint32_t pullDown;
     volatile uint32_t* ppsRegs[2];
-    uint32_t ppsValues[2];
-    uint32_t size = 2;
+    uint32_t ppsValues[sizeof(ppsRegs)/sizeof(uint32_t)];
     
      /* PMD (Peripheral Module Disable) Configuration */
     uint32_t pmd1 = 0x1001; /* disbale - ADC ADCMD + Comparator Voltage Reference */
@@ -109,14 +109,15 @@ void Initialize ( void )
     PRECONbits.PFMWS = 2; /* Two Wait states */
     CFGCONbits.ECCCON = 3; /* ECC (Flash Error Correcting Code) and dynamic ECC are disabled */
 
+    directionControl = 0x0;
     pullUp = 0x0;
     pullDown = 0x0;
     /* PORT B */
-    digitalMode = 0x4000;
-    GPIOPortInitialize(PORT_B, digitalMode, pullUp, pullDown);
+    digitalMode = 0x4000; /* UxRX RB14 */
+    GPIOPortInitialize(PORT_B, directionControl, digitalMode, pullUp, pullDown);
     /* PORT G */
-    digitalMode = 0x40;
-    GPIOPortInitialize(PORT_G, digitalMode, pullUp, pullDown);
+    digitalMode = 0x40;/* UxTX RG6 */
+    GPIOPortInitialize(PORT_G, directionControl, digitalMode, pullUp, pullDown);
     
     /* PPS */  
     /* pin used for UART2 RX */
@@ -125,11 +126,13 @@ void Initialize ( void )
     /* pin used for UART2 TX */
     ppsRegs[1] = &RPB14R;
     ppsValues[1] = 2;
-    GPIOPPSInitialize(ppsRegs, ppsValues, size);
+    GPIOPPSInitialize(ppsRegs, ppsValues, sizeof(ppsRegs)/sizeof(uint32_t));
     /* Coprocessor 0 */
     CP0Initialize(0,true);
     /* UARTs */
 	UARTInitialize(UART2);
     /* Interrupt controller */
     IRQInitialize();
+    
+    __builtin_enable_interrupts();
 }

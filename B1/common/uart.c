@@ -55,7 +55,7 @@ typedef struct
     volatile uint32_t * USTASET;
 } UART_SFRS_PTRS;
 
-static UART_SFRS_PTRS Uarts[6];
+static UART_SFRS_PTRS Uart[6];
 
 bool static SetSfrs( UART_NUMBER uart, UART_SFRS_PTRS * sfrsPtrs)
 {
@@ -154,7 +154,7 @@ void UART_Initialize( void )
     /* one time init. */
     while (i > 0)
     {
-        SetSfrs(i-1, &Uarts[i-1]);
+        SetSfrs(i-1, &Uart[i-1]);
         i--;
     }
 }
@@ -179,14 +179,14 @@ bool UARTSetup(UART_NUMBER uart, UART_BAUDRATE baudRate, UART_DATA_BITS dataBits
     brgh1 = ((uartCloclFrequency / (uint32_t)baudRate) >> 2) - 1;
     if((brgh1 >= 0) && (brgh1 <= UINT16_MAX))
     {
-        *Uarts[uart].UMODESET = UMODE_BRGH_MASK;
-        *Uarts[uart].UBRG = brgh1;
+        *Uart[uart].UMODESET = UMODE_BRGH_MASK;
+        *Uart[uart].UBRG = brgh1;
         result = true;
     }
     else if ((brgh0 >= 0) && (brgh0 <= UINT16_MAX))
     {
-        *Uarts[uart].UMODECLR = UMODE_BRGH_MASK;
-        *Uarts[uart].UBRG = brgh0;
+        *Uart[uart].UMODECLR = UMODE_BRGH_MASK;
+        *Uart[uart].UBRG = brgh0;
         result = true;
     }
 
@@ -196,17 +196,17 @@ bool UARTSetup(UART_NUMBER uart, UART_BAUDRATE baudRate, UART_DATA_BITS dataBits
         switch (dataBits)
         {
             case DATA_8_BITS:
-                uartMode = *Uarts[uart].UMODE;
+                uartMode = *Uart[uart].UMODE;
                 uartMode &= ~UMODE_PDSEL_MASK;
-                *Uarts[uart].UMODE = uartMode | (uint32_t)parity ;
+                *Uart[uart].UMODE = uartMode | (uint32_t)parity ;
                 break;
             case DATA_9_BITS:
                 result = parity == PARITY_NONE;
                 if(result)
                 {
-                   uartMode = *Uarts[uart].UMODE;
+                   uartMode = *Uart[uart].UMODE;
                    uartMode &= ~UMODE_PDSEL_MASK;
-                   *Uarts[uart].UMODE = uartMode | dataBits;
+                   *Uart[uart].UMODE = uartMode | dataBits;
                 }
                 break;
             default:
@@ -217,19 +217,19 @@ bool UARTSetup(UART_NUMBER uart, UART_BAUDRATE baudRate, UART_DATA_BITS dataBits
         if (result)
         {
             /* Configure UART mode */
-            uartMode = *Uarts[uart].UMODE;
+            uartMode = *Uart[uart].UMODE;
             uartMode &= ~UMODE_STSEL_MASK;
-            *Uarts[uart].UMODE = uartMode | (uint32_t)stopBits ;
+            *Uart[uart].UMODE = uartMode | (uint32_t)stopBits ;
         }
     }
 
      if (result)
     {
         /* Enable the UART receiver by setting the URXEN bit. */
-        *Uarts[uart].USTASET = (USTA_UTXEN_MASK | USTA_URXEN_MASK);
+        *Uart[uart].USTASET = (USTA_UTXEN_MASK | USTA_URXEN_MASK);
 
         /* Enable the UART module by setting the ON bit. */
-        *Uarts[uart].UMODESET = UMODE_ON_MASK;
+        *Uart[uart].UMODESET = UMODE_ON_MASK;
     }
     
     return result;
@@ -241,15 +241,15 @@ void static UARTClearErrors( UART_NUMBER uart )
     uint8_t c = 8 + 1;/* 8 Fifo + 1 RX register */
 
     /* Clear overrun error */
-    if(*Uarts[uart].USTA & USTA_OERR_MASK)
+    if(*Uart[uart].USTA & USTA_OERR_MASK)
     {
-        *Uarts[uart].USTACLR = USTA_OERR_MASK;
+        *Uart[uart].USTACLR = USTA_OERR_MASK;
     }
 
     /* Read bytes to clear errors */
-    while((*Uarts[uart].USTA & (USTA_FERR_MASK | USTA_PERR_MASK)) && c > 0)
+    while((*Uart[uart].USTA & (USTA_FERR_MASK | USTA_PERR_MASK)) && c > 0)
     {
-        b = (uint8_t )(*Uarts[uart].URXREG );
+        b = (uint8_t )(*Uart[uart].URXREG );
         c--;
     }
 }
@@ -259,7 +259,7 @@ UART_ERROR UARTGetError( UART_NUMBER uart, bool clear )
     uint32_t status;
     UART_ERROR errors;
     
-    status = *Uarts[uart].USTA;
+    status = *Uart[uart].USTA;
 
     errors = (UART_ERROR)(status & (USTA_OERR_MASK | USTA_FERR_MASK | USTA_PERR_MASK));
 
@@ -275,23 +275,23 @@ bool UARTTxReady( UART_NUMBER uart )
 {
     bool result = false;
     
-    result = (!(*Uarts[uart].USTA & USTA_UTXBF_MASK));
+    result = (!(*Uart[uart].USTA & USTA_UTXBF_MASK));
 
     return result;
 }
 
 void UARTWriteByte(UART_NUMBER uart, int data)
 {
-    while ((*Uarts[uart].USTA & USTA_UTXBF_MASK));
+    while ((*Uart[uart].USTA & USTA_UTXBF_MASK));
 
-    *Uarts[uart].UTXREG = data;
+    *Uart[uart].UTXREG = data;
 }
 
 bool UARTTxComplete( UART_NUMBER uart )
 {
     bool result = false;
         
-    result = (*Uarts[uart].USTA & USTA_TRMT_MASK);
+    result = (*Uart[uart].USTA & USTA_TRMT_MASK);
     
     return result;
 }
@@ -300,12 +300,12 @@ bool UARTRxReady( UART_NUMBER uart )
 {
     bool result = false;
 
-    result = (USTA_URXDA_MASK == (*Uarts[uart].USTA & USTA_URXDA_MASK));
+    result = (USTA_URXDA_MASK == (*Uart[uart].USTA & USTA_URXDA_MASK));
 
     return result;
 }
 
 int UARTReadByte( UART_NUMBER uart )
 {
-    return(*Uarts[uart].URXREG);
+    return(*Uart[uart].URXREG);
 }

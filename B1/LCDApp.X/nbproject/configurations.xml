@@ -11,6 +11,11 @@
         <itemPath>../common/uart.h</itemPath>
         <itemPath>../common/system.h</itemPath>
         <itemPath>../common/cp0.h</itemPath>
+        <itemPath>../common/spi.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="ST7735SChipDriver" projectFiles="true">
+        <itemPath>../ST7735SChipDriver/lcd.h</itemPath>
+        <itemPath>../ST7735SChipDriver/lcdfonts.h</itemPath>
       </logicalFolder>
       <itemPath>initialize.h</itemPath>
     </logicalFolder>
@@ -29,6 +34,11 @@
         <itemPath>../common/uart.c</itemPath>
         <itemPath>../common/system.c</itemPath>
         <itemPath>../common/cp0.c</itemPath>
+        <itemPath>../common/spi.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="ST7735SChipDriver" projectFiles="true">
+        <itemPath>../ST7735SChipDriver/lcd.c</itemPath>
+        <itemPath>../ST7735SChipDriver/lcdfonts.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>initialize.c</itemPath>
@@ -43,6 +53,7 @@
     <Elem>.</Elem>
     <Elem>../microchip</Elem>
     <Elem>../common</Elem>
+    <Elem>../ST7735SChipDriver</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -312,7 +323,7 @@
         <property key="memories.programmemory.ranges" value="1d000000-1d1fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmerToGoFilePath"
-                  value="C:/Users/Simon/source/repos/Singular/B1/bootloaderTestApp.X/debug/default/bootloaderTestApp_ptg"/>
+                  value="C:/Users/Simon/source/repos/Singular/B1/LCDApp.X/debug/default/LCDApp_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.ledbrightness" value="5"/>
